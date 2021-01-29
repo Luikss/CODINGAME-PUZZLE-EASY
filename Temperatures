@@ -1,0 +1,31 @@
+using System;
+using System.Linq;
+using System.IO;
+using System.Text;
+using System.Collections;
+using System.Collections.Generic;
+
+class Solution 
+{
+    static void Main(string[] args)
+    {
+        int n = int.Parse(Console.ReadLine());
+
+        if (n == 0) {
+            Console.WriteLine(0);
+            return;
+        }
+        string[] inputs = Console.ReadLine().Split(' ');
+        int closest = int.MaxValue;
+
+        for (int i = 0; i < n; i++)
+        {
+            int t = int.Parse(inputs[i]);
+
+            if (Math.Abs(t) < Math.Abs(closest) || Math.Abs(t) == Math.Abs(closest) && t > closest) {
+                    closest = t;
+            }
+        }
+        Console.WriteLine(closest);
+        }
+    }
