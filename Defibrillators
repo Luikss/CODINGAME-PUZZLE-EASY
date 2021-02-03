@@ -1,0 +1,54 @@
+using System;
+using System.Linq;
+using System.IO;
+using System.Text;
+using System.Collections;
+using System.Collections.Generic;
+
+class Solution
+{
+    static void Main(string[] args)
+    {
+        string LON = Console.ReadLine();
+        double userLongitude = Convert.ToDouble(LON.Replace(',', '.'));
+        string LAT = Console.ReadLine();
+        double userLatitude = Convert.ToDouble(LAT.Replace(',', '.'));
+        int N = int.Parse(Console.ReadLine());
+        string closestDefib = string.Empty;
+        double closestDistance = double.MaxValue;
+
+        for (int i = 0; i < N; i++)
+        {
+            string DEFIB = Console.ReadLine();
+            string address;
+            double distance = closest(userLongitude, userLatitude, DEFIB, out address);
+
+            if (i == 0) {
+                closestDistance = distance;
+                closestDefib = address;
+            } else if (distance < closestDistance) {
+                    closestDistance = distance;
+                    closestDefib = address;
+            }
+        }
+        Console.WriteLine(closestDefib);
+    }
+
+    public static double closest(double uLongitude, double uLatitude, string s, out string address)
+    {
+        string[] split = s.Split(';');
+        address = split[1];
+        double aLat = Convert.ToDouble(split[5].Replace(',', '.'));
+        double aLong = Convert.ToDouble(split[4].Replace(',', '.'));
+        double distance = findDistance(uLongitude, uLatitude, aLong, aLat);
+        return distance;
+    }
+
+    private static double findDistance(double uLong, double uLat, double aLong, double aLat)
+    {
+        double x = (aLong - uLong) * Math.Cos((uLat + aLat) / 2);
+        double y = (aLat - uLat);
+        double d = Math.Sqrt((x * x) + (y * y)) * 6371;
+        return d;
+    }
+}
