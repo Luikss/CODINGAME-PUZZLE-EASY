@@ -1,0 +1,40 @@
+using System;
+using System.Linq;
+using System.IO;
+using System.Text;
+using System.Collections;
+using System.Collections.Generic;
+
+class Solution
+{
+    static void Main(string[] args)
+    {
+        int L = int.Parse(Console.ReadLine());
+        int H = int.Parse(Console.ReadLine());
+        string T = Console.ReadLine();
+        char[] charT = T.ToCharArray();
+        byte[] position = new byte[charT.Length];
+        byte index = 0;
+        
+        foreach (char c in charT)
+        {
+            position[index] = (byte)((int)Char.ToUpper(c) - 64);
+            
+            if ((position[index] <= 0) || (position[index] > 26)) {
+                position[index] = (byte)27;
+            }
+            index++;
+        }
+        
+        for (int i = 0; i < H; i++)
+        {
+            string ROW = Console.ReadLine();
+            
+            for (int j = 0; j < index; j++)
+            {
+                Console.Write(ROW.Substring(((position[j] * L) - L), L));
+            }
+            Console.Write('\n');
+        }
+    }
+}
